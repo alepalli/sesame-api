@@ -1,23 +1,10 @@
-export enum Gender {
-  MALE = 'male',
-  FEMALE = 'female',
-  NO = 'no_response'
-}
+import { Gender } from './enum/gender';
+import { Status } from './enum/status';
+import { IdentityNumberType } from './enum/Identity_number_type';
+import { WorkStatus } from './enum/work_status';
 
-export enum Status {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
-}
-
-export enum IdentityNumberType {
-  DNI = 'dni',
-  NIE = 'nie',
-  RUT = 'rut',
-  OTHER = 'other'
-}
-
-export interface Employee {
-  companyId :string;
+export interface EmployeeRequest {
+  companyId: string;
   firstName: string;
   lastName: string;
   invitation: boolean;
@@ -32,7 +19,10 @@ export interface Employee {
   ssn: string;
   phone: string;
   dateOfBirth: string;
-  customFields: {id: string, value: string}[];
+  customFields: {
+    id: string;
+    value: string;
+  }[];
   nationality: string;
   maritalStatus: string;
   address: string;
@@ -50,5 +40,76 @@ export interface Employee {
   professionalCategoryCode: string;
   professionalCategoryDescription: string;
   bic: string;
-  jobChargeId: string
+  jobChargeId: string;
+}
+
+export interface EmployeeData {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  workStatus: WorkStatus;
+  imageProfileURL: string;
+  code: number;
+  pin: number;
+  phone: string;
+  company: {
+    id: string;
+    name: string;
+    notificationEmail: string;
+    language: string;
+    createdAt: string;
+    updatedAt: string;
+  }[];
+  gender: Gender;
+  contractId: string;
+  nid: string;
+  identityNumberType: IdentityNumberType;
+  ssn: string;
+  pricePerHour: number;
+  accountNumber: string;
+  dateOfBirth: string;
+  customFields: {
+    id: string;
+    companyId: string;
+    name: string;
+    slug: string;
+    type: string;
+    value: string;
+  }[];
+  createdAt: string;
+  updatedAt: string;
+  status: Status;
+  children: number;
+  disability: number;
+  address: string;
+  postalCode: string;
+  city: string;
+  province: string;
+  country: string;
+  nationality: string;
+  personalMail: string;
+  maritalStatus: string;
+  emergencyPhone: string;
+  description: string;
+  salaryRange: string;
+  studyLevel: string;
+  professionalCategoryCode: string;
+  professionalCategoryDescription: string;
+  bic: string;
+  jobChargeId: string;
+  jobChargeName: string;
+  language: string;
+}
+
+export interface EmployeeMeta {
+  currentPage: number;
+  lastPage: number;
+  total: number;
+  perPage: number;
+}
+
+export interface EmployeeResponse {
+  data: EmployeeData;
+  meta: EmployeeMeta;
 }

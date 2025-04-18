@@ -6,5 +6,3 @@ export interface CoreInfo {
   createdAt: string;
   updatedAt: string;
 }
-
-export class CompanyInfo {}
