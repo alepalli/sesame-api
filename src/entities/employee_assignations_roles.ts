@@ -1,4 +1,6 @@
-export interface EmployeeAssignationRolesData {
+import { Meta } from './interfaces/meta';
+
+export interface EmployeeAssignationsRolesData {
   id: string;
   role: {
     id: string;
@@ -8,19 +10,12 @@ export interface EmployeeAssignationRolesData {
   affectedEntityId: string;
 }
 
-export interface EmployeeAssignationRolesMeta {
-  currentPage: number;
-  lastPage: number;
-  total: number;
-  perPage: number;
+export interface EmployeeAssignationsRolesResponse {
+  data: EmployeeAssignationsRolesData;
+  meta: Meta;
 }
 
-export interface EmployeeAssignationRolesResponse {
-  data: EmployeeAssignationRolesData;
-  meta: EmployeeAssignationRolesMeta;
-}
-
-export interface EmployeeAssignationRolesRequest {
+export interface EmployeeAssignationsRolesRequest {
   roleId: string;
   employeeId: string;
   entityAffectedId: string;

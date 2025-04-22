@@ -2,8 +2,9 @@ import { Gender } from './enum/gender';
 import { Status } from './enum/status';
 import { IdentityNumberType } from './enum/Identity_number_type';
 import { WorkStatus } from './enum/work_status';
+import { Meta } from './interfaces/meta';
 
-export interface EmployeeRequest {
+export interface EmployeesRequest {
   companyId: string;
   firstName: string;
   lastName: string;
@@ -43,7 +44,7 @@ export interface EmployeeRequest {
   jobChargeId: string;
 }
 
-export interface EmployeeData {
+export interface EmployeesData {
   id: string;
   firstName: string;
   lastName: string;
@@ -102,14 +103,7 @@ export interface EmployeeData {
   language: string;
 }
 
-export interface EmployeeMeta {
-  currentPage: number;
-  lastPage: number;
-  total: number;
-  perPage: number;
-}
-
-export interface EmployeeResponse {
-  data: EmployeeData;
-  meta: EmployeeMeta;
+export interface EmployeesResponse {
+  data: EmployeesData;
+  meta: Meta;
 }

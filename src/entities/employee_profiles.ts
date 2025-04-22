@@ -1,10 +1,11 @@
 import { WorkStatus } from './enum/work_status';
+import { Meta } from './interfaces/meta';
 
 export interface EmployeeProfileRequest {
   organizationChartManagerId: string;
 }
 
-export interface EmployeeProfileData {
+export interface EmployeeProfilesData {
   id: string;
   employee: {
     id: string;
@@ -27,11 +28,8 @@ export interface EmployeeProfileData {
     workCheckTypeName: string;
   };
 }
-export interface EmployeeProfileMeta {
-  currentPage: number;
-}
 
-export interface EmployeeProfileResponse {
-  data: EmployeeProfileData;
-  meta: EmployeeProfileMeta;
+export interface EmployeeProfilesResponse {
+  data: EmployeeProfilesData;
+  meta: Meta;
 }

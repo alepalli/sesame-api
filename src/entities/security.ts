@@ -1,3 +1,5 @@
+import { Meta } from './interfaces/meta';
+
 export interface CoreInfo {
   id: string;
   name: string;
@@ -5,4 +7,9 @@ export interface CoreInfo {
   language: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface CoreInfoResponse {
+  data: CoreInfo;
+  meta: Meta;
 }

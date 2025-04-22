@@ -1,26 +1,21 @@
-import { Employee } from './employee';
+import { Employee } from './interfaces/employee';
 import { DepartmentsData } from './departments';
+import { Meta } from './interfaces/meta';
 
-export interface DepartmentsAssignationsData {
+export interface EmployeeDepartmentAssignationsData {
   id: string;
   employee: Employee;
   department: DepartmentsData;
   createdAt: string;
   updatedAt: string;
 }
-export interface DepartmentsAssignationMeta {
-  currentPage: number;
-  lastPage: number;
-  total: number;
-  perPage: number;
+
+export interface EmployeeDepartmentAssignationsResponse {
+  data: EmployeeDepartmentAssignationsData;
+  meta: Meta;
 }
 
-export interface DepartmentsAssignationResponse {
-  data: DepartmentsAssignationsData;
-  meta: DepartmentsAssignationMeta;
-}
-
-export interface DepartmentsAssignationRequest {
+export interface EmployeeDepartmentAssignationsRequest {
   employeeId: string;
   departmentId: string;
 }

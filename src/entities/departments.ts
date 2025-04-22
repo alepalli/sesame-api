@@ -1,3 +1,5 @@
+import { Meta } from './interfaces/meta';
+
 export interface DepartmentsRequest {
   companyId: string;
   name: string;
@@ -8,14 +10,7 @@ export interface DepartmentsData {
   name: string;
 }
 
-export interface DepartmentsMeta {
-  currentPage: number;
-  lastPage: number;
-  total: number;
-  perPage: number;
-}
-
 export interface DepartmentsResponse {
   data: DepartmentsData;
-  meta: DepartmentsMeta;
+  meta: Meta;
 }

@@ -1,7 +1,8 @@
-import { Manager } from './manager';
-import { Employee } from './employee';
+import { Manager } from './interfaces/manager';
+import { Employee } from './interfaces/employee';
 import { Permission } from './enum/permission';
 import { Order } from './enum/order';
+import { Meta } from './interfaces/meta';
 
 export interface EmployeeManagersRequest {
   employeeId: string;
@@ -20,14 +21,7 @@ export interface EmployeeManagersData {
   updatedAt: string;
 }
 
-export interface EmployeeManagerMeta {
-  currentPage: number;
-  lastPage: number;
-  total: number;
-  perPage: number;
-}
-
-export interface EmployeeManagerResponse {
+export interface EmployeeManagersResponse {
   data: EmployeeManagersData;
-  meta: EmployeeManagerMeta;
+  meta: Meta;
 }

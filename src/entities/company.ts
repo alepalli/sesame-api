@@ -1,14 +1,9 @@
+import { Meta } from './interfaces/meta';
+
 export interface CompanyRequest {
   name: string;
   notificationEmail: string;
   language: string;
-}
-
-export interface CompanyMeta {
-  currentPage: number;
-  lastPage: number;
-  total: number;
-  perPage: number;
 }
 
 export interface CompanyData {
@@ -22,5 +17,5 @@ export interface CompanyData {
 
 export interface CompanyResponse {
   data: CompanyData;
-  meta: CompanyMeta;
+  meta: Meta;
 }

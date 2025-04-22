@@ -1,3 +1,5 @@
+import { Meta } from './interfaces/meta';
+
 export interface OfficesData {
   id: string;
   name: string;
@@ -10,16 +12,9 @@ export interface OfficesData {
   radio: number;
 }
 
-export interface OfficesMeta {
-  currentPage: number;
-  lastPage: number;
-  total: number;
-  perPage: number;
-}
-
 export interface OfficesResponse {
   data: OfficesData;
-  meta: OfficesMeta;
+  meta: Meta;
 }
 
 export interface OfficesRequest {
