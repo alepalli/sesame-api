@@ -14,3 +14,7 @@ export interface DepartmentsResponse {
   data: DepartmentsData;
   meta: Meta;
 }
+
+export interface DepartmentsRequestPut {
+  name: string;
+}

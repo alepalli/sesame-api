@@ -20,3 +20,7 @@ export interface EmployeeAssignationsRolesRequest {
   employeeId: string;
   entityAffectedId: string;
 }
+
+export interface EmployeeAssignationsRolesDelete {
+  assignationId: string;
+}

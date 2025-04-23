@@ -1,6 +1,7 @@
 import { Employee } from './interfaces/employee';
 import { Coordinates } from './interfaces/coordinates';
 import { Meta } from './interfaces/meta';
+import { WorkEntryType } from './enum/work_entry_type';
 
 export interface WorkEntriesData {
   id: string;
@@ -36,4 +37,38 @@ export interface WorkEntriesRequest {
     date: string;
     coordinates: Coordinates;
   }[];
+}
+
+export interface WorkEntriesRequestClockIn {
+  workEntryType: string;
+  workEntryIn: {
+    date: string;
+    coordinates: Coordinates;
+  }[];
+  workEntryOut: {
+    date: string;
+    coordinates: Coordinates;
+  }[];
+}
+
+export interface WorkEntriesRequestClockOut {
+  employeeId: string;
+  workEntryOut: {
+    coordinates: Coordinates;
+  };
+}
+
+export interface WorkEntriesRequestCreate {
+  employeeId: string;
+  workEntryType: WorkEntryType;
+  workBreakId: string;
+  workCheckTypeId: string;
+  workEntryIn: {
+    date: string;
+    coordinates: Coordinates;
+  }[];
+  workEntryOut: {
+    date: string;
+    coordinates: Coordinates;
+  };
 }

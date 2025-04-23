@@ -1,4 +1,5 @@
 import { Meta } from './interfaces/meta';
+import { Coordinates } from './interfaces/coordinates';
 
 export interface OfficesData {
   id: string;
@@ -25,6 +26,14 @@ export interface OfficesRequest {
     latitude: number;
     longitude: number;
   }[];
+  description: string;
+  radio: number;
+}
+
+export interface OfficesRequestPut {
+  name: string;
+  address: string;
+  coordinates: Coordinates;
   description: string;
   radio: number;
 }
