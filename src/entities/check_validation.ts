@@ -1,5 +1,5 @@
-import { Employee } from './interfaces/employee';
-import { Meta } from './interfaces/meta';
+import { Employee } from './export/employee';
+import { Meta } from './export/meta';
 
 export interface CheckValidationData {
   id: string;

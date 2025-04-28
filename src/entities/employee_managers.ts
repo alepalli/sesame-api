@@ -1,8 +1,8 @@
-import { Manager } from './interfaces/manager';
-import { Employee } from './interfaces/employee';
+import { Manager } from './export/manager';
+import { Employee } from './export/employee';
 import { Permission } from './enum/permission';
 import { Order } from './enum/order';
-import { Meta } from './interfaces/meta';
+import { Meta } from './export/meta';
 
 export interface EmployeeManagersRequest {
   employeeId: string;

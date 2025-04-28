@@ -1,5 +1,5 @@
 import { WorkStatus } from './enum/work_status';
-import { Meta } from './interfaces/meta';
+import { Meta } from './export/meta';
 
 export interface EmployeeProfilesRequest {
   organizationChartManagerId: string;

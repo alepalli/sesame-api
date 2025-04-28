@@ -1,6 +1,6 @@
-import { Employee } from './interfaces/employee';
+import { Employee } from './export/employee';
 import { DepartmentsData } from './departments';
-import { Meta } from './interfaces/meta';
+import { Meta } from './export/meta';
 
 export interface EmployeeDepartmentAssignationsData {
   id: string;

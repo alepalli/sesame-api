@@ -1,4 +1,4 @@
-import { Meta } from './interfaces/meta';
+import { Meta } from './export/meta';
 
 export interface StatisticsData {
   employeeId: string;

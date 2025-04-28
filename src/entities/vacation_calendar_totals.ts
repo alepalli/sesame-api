@@ -1,6 +1,6 @@
-import { Employee } from './interfaces/employee';
+import { Employee } from './export/employee';
 import { VacationConfigurationData } from './vacation_configurations';
-import { Meta } from './interfaces/meta';
+import { Meta } from './export/meta';
 
 export interface VacationCalendarTotalsData {
   id: string;

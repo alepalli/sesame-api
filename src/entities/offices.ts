@@ -1,5 +1,5 @@
-import { Meta } from './interfaces/meta';
-import { Coordinates } from './interfaces/coordinates';
+import { Meta } from './export/meta';
+import { Coordinates } from './export/coordinates';
 
 export interface OfficesData {
   id: string;

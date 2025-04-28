@@ -1,6 +1,6 @@
 import { OfficesData } from './offices';
-import { Employee } from './interfaces/employee';
-import { Meta } from './interfaces/meta';
+import { Employee } from './export/employee';
+import { Meta } from './export/meta';
 
 export interface EmployeeOfficeAssignationsData {
   id: string;

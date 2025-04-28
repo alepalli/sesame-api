@@ -1,5 +1,5 @@
 import { CompanyData } from './company';
-import { Meta } from './interfaces/meta';
+import { Meta } from './export/meta';
 import { RenewalPeriod } from './enum/renewal_period';
 import { DayType } from './enum/day_type';
 import { PickMode } from './enum/pick_mode';

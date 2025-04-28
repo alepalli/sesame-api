@@ -1,6 +1,6 @@
-import { Employee } from './interfaces/employee';
-import { Coordinates } from './interfaces/coordinates';
-import { Meta } from './interfaces/meta';
+import { Employee } from './export/employee';
+import { Coordinates } from './export/coordinates';
+import { Meta } from './export/meta';
 import { WorkEntryType } from './enum/work_entry_type';
 
 export interface WorkEntriesData {
