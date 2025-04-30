@@ -69,6 +69,12 @@ import {
   VacationConfigurationsAssignationsRequest,
   VacationConfigurationsAssignationsResponse,
 } from './entities/vacation_configurations_assignations';
+import { VacationDayOffResponse } from './entities/vacation_day_off';
+import { WorkedHoursByWeekDayQuery } from './entities/queries/worked_hours_by_week_day.query';
+import { WorkedHoursByEmployeeQuery } from './entities/queries/worked_hours_by_employee.query';
+import { WorkedNightHoursQuery } from './entities/queries/worked_night_hours.query';
+import { WorkedAbsenceDaysQuery } from './entities/queries/worked_absence_days.query';
+import { VacationDayOffRequestsRequest, VacationDayOffRequestsResponse } from './entities/vacation_day_off_requests';
 
 const BASE_URL = 'https://api-eu1.sesametime.com';
 
@@ -79,7 +85,7 @@ export class AppService {
   // security
 
   /**
-   * @returns info token
+   * recupera info token
    * @param authToken
    */
   public async getTokenInfo(authToken: string): Promise<CoreInfoResponse> {
@@ -165,7 +171,7 @@ export class AppService {
   }
 
   /**
-   * @returns lista di tutti i dipendenti
+   * recupera lista di tutti i dipendenti
    *
    * @param authToken
    * @param code
@@ -180,15 +186,15 @@ export class AppService {
    */
   public async findAllEmployees(
     authToken: string,
-    code: number,
-    dni: string,
-    email: string,
-    departmentIds: string[],
-    officeIds: string[],
-    limit: number,
-    page: number,
-    orderBy: string,
-    status: Status,
+    code?: number,
+    dni?: string,
+    email?: string,
+    departmentIds?: string[],
+    officeIds?: string[],
+    limit?: number,
+    page?: number,
+    orderBy?: string,
+    status?: Status,
   ): Promise<EmployeesResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -221,7 +227,7 @@ export class AppService {
   }
 
   /**
-   * @returns dipendente tramite suo id
+   * recupera dipendente tramite suo id
    * @param authToken
    * @param id del dipendente da cercare
    */
@@ -336,7 +342,7 @@ export class AppService {
   }
 
   /**
-   * @returns lista delle tariffe
+   * recupera lista delle tariffe
    *
    * @param authToken
    * @param name
@@ -346,10 +352,10 @@ export class AppService {
    */
   public async findAllJobCharges(
     authToken: string,
-    name: string,
-    limit: number,
-    page: number,
-    orderBy: string,
+    name?: string,
+    limit?: number,
+    page?: number,
+    orderBy?: string,
   ): Promise<JobChargesResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -377,7 +383,7 @@ export class AppService {
   }
 
   /**
-   * @returns di una tariffa ricercata tramite id
+   * recupera una tariffa tramite id
    * @param authToken
    * @param jobChargeId della tariffa da cercare
    */
@@ -467,7 +473,7 @@ export class AppService {
   // employee profiles
 
   /**
-   * @returns manager in organigramma per dipendente
+   * recupera manager in organigramma tramite id del dipendente
    * @param authToken
    * @param employeeId id del dipendente per trovare il suo responsabile
    */
@@ -562,7 +568,7 @@ export class AppService {
   }
 
   /**
-   * @returns manager in organigramma per dipendente
+   * recupera manager in organigramma per dipendente
    * @param authToken
    * @param employeeId
    * @param managerId
@@ -572,11 +578,11 @@ export class AppService {
    */
   public async findEmployeeManagers(
     authToken: string,
-    employeeId: string,
-    managerId: string,
-    permission: Permission,
-    limit: number,
-    page: number,
+    employeeId?: string,
+    managerId?: string,
+    permission?: Permission,
+    limit?: number,
+    page?: number,
   ): Promise<EmployeeManagersResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -636,7 +642,7 @@ export class AppService {
   // roles
 
   /**
-   * @returns lista dei ruoli
+   * recupera lista dei ruoli
    * @param authToken
    * @param limit
    * @param page
@@ -644,8 +650,8 @@ export class AppService {
 
   public async findAllRoles(
     authToken: string,
-    limit: number,
-    page: number,
+    limit?: number,
+    page?: number,
   ): Promise<RolesResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -672,7 +678,7 @@ export class AppService {
   // employee assignations roles
 
   /**
-   * @returns lista dei ruoli assegnati per id del dipendente
+   * recupera lista dei ruoli assegnati per id del dipendente
    * @param authToken
    * @param employeeId id del dipendente per ricercare i ruoli assegnati al suo id
    * @param limit
@@ -682,8 +688,8 @@ export class AppService {
   public async findAssignationsRolesByEmployeeId(
     authToken: string,
     employeeId: string,
-    limit: number,
-    page: number,
+    limit?: number,
+    page?: number,
   ): Promise<EmployeeAssignationsRolesResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -800,7 +806,7 @@ export class AppService {
   }
 
   /**
-   * @returns lista dei dipartimenti
+   * recupera lista dei dipartimenti
    * @param authToken
    * @param name
    * @param limit
@@ -809,10 +815,10 @@ export class AppService {
    */
   public async findAllDepartments(
     authToken: string,
-    name: string,
-    limit: number,
-    page: number,
-    orderBy: string,
+    name?: string,
+    limit?: number,
+    page?: number,
+    orderBy?: string,
   ): Promise<DepartmentsResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -897,10 +903,10 @@ export class AppService {
     }
   }
 
-  // employee departmnet assignations
+  // employee department assignations
 
   /**
-   * @returns lista dipendenti con assegnazione del dipartimento
+   * recupera lista dipendenti con assegnazione del dipartimento
    * @param authToken
    * @param employeeId
    * @param departmentId
@@ -909,10 +915,10 @@ export class AppService {
    */
   public async findAllEmployeeDepartmentAssignations(
     authToken: string,
-    employeeId: string,
-    departmentId: string,
-    limit: number,
-    page: number,
+    employeeId?: string,
+    departmentId?: string,
+    limit?: number,
+    page?: number,
   ): Promise<EmployeeDepartmentAssignationsResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -1036,7 +1042,7 @@ export class AppService {
   }
 
   /**
-   * @returns lista degli uffici
+   * recupera lista degli uffici
    * @param authToken
    *
    * @param name
@@ -1046,10 +1052,10 @@ export class AppService {
    */
   public async findAllOffices(
     authToken: string,
-    name: string,
-    limit: number,
-    page: number,
-    orderBy: number,
+    name?: string,
+    limit?: number,
+    page?: number,
+    orderBy?: number,
   ): Promise<OfficesResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -1136,7 +1142,7 @@ export class AppService {
   // employee office assignations
 
   /**
-   * @returns tutte le assegnazioni di ufficio verso i dipendenti
+   * recupera tutte le assegnazioni di ufficio verso i dipendenti
    * @param authToken
    *
    * @param employeeId
@@ -1146,10 +1152,10 @@ export class AppService {
    */
   public async findAllEmployeeOfficeAssignations(
     authToken: string,
-    employeeId: string,
-    officeId: string,
-    limit: number,
-    page: number,
+    employeeId?: string,
+    officeId?: string,
+    limit?: number,
+    page?: number,
   ): Promise<EmployeeOfficeAssignationsResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -1276,18 +1282,17 @@ export class AppService {
   }
 
   /**
-   * @returns lista di tutti i custom fields
+   * recupera lista di tutti i custom fields
    * @param authToken
-   *
    * @param limit
    * @param page
    * @param orderBy
    */
   public async findAllCustomFields(
     authToken: string,
-    limit: number,
-    page: number,
-    orderBy: number,
+    limit?: number,
+    page?: number,
+    orderBy?: number,
   ): Promise<CustomFieldsResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -1462,7 +1467,7 @@ export class AppService {
   }
 
   /**
-   * @returns lista delle voci lavorative della company
+   * recupera lista delle voci lavorative della company
    * @param authToken
    *
    * @param employeeId
@@ -1477,15 +1482,15 @@ export class AppService {
    */
   public async findAllWorkEntries(
     authToken: string,
-    employeeId: string,
-    from: string,
-    to: string,
-    updatedAtGte: string,
-    updatedAtLte: string,
-    onlyReturn: string,
-    limit: number,
-    page: number,
-    orderBy: number,
+    employeeId?: string,
+    from?: string,
+    to?: string,
+    updatedAtGte?: string,
+    updatedAtLte?: string,
+    onlyReturn?: string,
+    limit?: number,
+    page?: number,
+    orderBy?: string,
   ): Promise<WorkEntriesResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -1584,15 +1589,15 @@ export class AppService {
   // check types
 
   /**
-   * @returns tutti i check types
+   * recupera tutti i check types
    * @param authToken
    * @param limit
    * @param page
    */
   public async findAllCheckTypes(
     authToken: string,
-    limit: number,
-    page: number,
+    limit?: number,
+    page?: number,
   ): Promise<CheckTypesResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -1620,7 +1625,7 @@ export class AppService {
   // work breaks
 
   /**
-   * @returns pause lavorative / work breaks
+   * recupera pause lavorative / work breaks
    * @param authToken
    *
    * @param limit
@@ -1628,8 +1633,8 @@ export class AppService {
    */
   public async findAllWorkBreaks(
     authToken: string,
-    limit: number,
-    page: number,
+    limit?: number,
+    page?: number,
   ): Promise<WorkBreaksResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -1657,7 +1662,7 @@ export class AppService {
   // check validation
 
   /**
-   * @returns lista dei check validation per dipendente e status
+   * recupera lista dei check validation per dipendente e status
    * @param authToken
    * @param employeeIds
    * @param status
@@ -1669,12 +1674,12 @@ export class AppService {
 
   public async findAllCheckValidationByEmployeesAndStatus(
     authToken: string,
-    employeeIds: string[],
-    status: Status,
-    from: string,
-    to: string,
-    limit: number,
-    page: number,
+    employeeIds?: string[],
+    status?: Status,
+    from?: string,
+    to?: string,
+    limit?: number,
+    page?: number,
   ): Promise<CheckValidationResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -1706,25 +1711,16 @@ export class AppService {
   // statistics
 
   /**
-   * @returns lista di tutte le ore lavorate divise per dipendente
+   * recupera lista di tutte le ore lavorate divise per dipendente
    * @param authToken
    *
-   * @param employeeIds
-   * @param withChecks
-   * @param from
-   * @param to
-   * @param limit
-   * @param page
+   * @param query WorkedHoursByEmployeeQuery
    */
   public async findAllWorkedHoursByEmployee(
     authToken: string,
-    employeeIds: string[],
-    withChecks: boolean,
-    from: string,
-    to: string,
-    limit: number,
-    page: number,
+    query: WorkedHoursByEmployeeQuery,
   ): Promise<StatisticsResponse> {
+    const { employeeIds, withChecks, from, to, limit, page } = query;
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -1753,24 +1749,17 @@ export class AppService {
   }
 
   /**
-   * @returns lista di tutte le ore lavorate divise per dipendente
+   * recupera lista di tutte le ore lavorate divise per dipendente
    * e giorno della settimana
    * @param authToken
    *
-   * @param employeeIds
-   * @param from
-   * @param to
-   * @param limit
-   * @param page
+   * @param query WorkedHoursQuery
    */
   public async findAllWorkedHoursByEmployeeAndWeekDay(
     authToken: string,
-    employeeIds: string[],
-    from: string,
-    to: string,
-    limit: number,
-    page: number,
+    query: WorkedHoursByWeekDayQuery,
   ): Promise<StatisticsResponse> {
+    const { employeeIds, from, to, limit, page } = query;
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -1798,26 +1787,17 @@ export class AppService {
   }
 
   /**
-   * @returns lista di tutte le ore notturne lavorate divise per dipendente
+   * recupera lista di tutte le ore notturne lavorate divise per dipendente
    * @param authToken
    *
-   * @param employeeIds
-   * @param withChecks
-   * @param from
-   * @param to
-   * @param limit
-   * @param page
+   * @param query
    */
   public async findAllWorkedNightHoursByEmployee(
     authToken: string,
-    employeeIds: string[],
-    withChecks: boolean,
-    from: string,
-    to: string,
-    limit: number,
-    page: number,
+    query: WorkedNightHoursQuery,
   ): Promise<StatisticsResponse> {
     try {
+      const { employeeIds, withChecks, from, to, limit, page } = query;
       return new Promise((resolve, reject): void => {
         this._http
           .get(`${BASE_URL}/schedule/v1/reports/worked-night-hours`, {
@@ -1845,24 +1825,17 @@ export class AppService {
   }
 
   /**
-   * @returns lista di tutte le assenze lavorative divise per dipendente
+   * recupera lista di tutte le assenze lavorative divise per dipendente
    * @param authToken
    *
-   * @param employeeIds
-   * @param from
-   * @param to
-   * @param limit
-   * @param page
+   * @param query WorkedAbsenceDaysQuery
    */
   public async findAllWorkedAbsenceDaysByEmployee(
     authToken: string,
-    employeeIds: string[],
-    from: string,
-    to: string,
-    limit: number,
-    page: number,
+    query: WorkedAbsenceDaysQuery,
   ): Promise<StatisticsResponse> {
     try {
+      const { employeeIds, from, to, limit, page } = query;
       return new Promise((resolve, reject): void => {
         this._http
           .get(`${BASE_URL}/schedule/v1/reports/worked-absence-days`, {
@@ -1921,15 +1894,15 @@ export class AppService {
   }
 
   /**
-   * returns lista di tutte le vacation Configurations
+   * recupera lista di tutte le vacation Configurations
    * @param authToken
    * @param limit
    * @param page
    */
   public async findAllVacationConfigurations(
     authToken: string,
-    limit: number,
-    page: number,
+    limit?: number,
+    page?: number,
   ): Promise<VacationConfigurationResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -2053,7 +2026,7 @@ export class AppService {
   // vacation configurations assignations
 
   /**
-   * @returns tutti i dipendenti assegnati a una vacationConfiguration
+   * recupera tutti i dipendenti assegnati a una vacationConfiguration
    * @param authToken
    * @param vacationConfigurationId id della vacationConfiguration da trovare
    * @param year
@@ -2063,9 +2036,9 @@ export class AppService {
   public async findEmployeesAssignedToAVacationConfiguration(
     authToken: string,
     vacationConfigurationId: string,
-    year: number,
-    limit: number,
-    page: number,
+    year?: number,
+    limit?: number,
+    page?: number,
   ): Promise<VacationConfigurationsAssignationsResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -2114,6 +2087,7 @@ export class AppService {
         this._http
           .post(
             `${BASE_URL}/schedule/v1/vacation-configurations-assignations/${vacationConfigurationId}`,
+            body,
             {
               headers: {
                 Authorization: `Bearer ${authToken}`,
@@ -2138,7 +2112,7 @@ export class AppService {
   // vacation calendars
 
   /**
-   * @returns lista di tutti i piani ferie
+   * recupera lista di tutti i piani ferie
    * @param authToken
    * @param employeeId
    * @param year
@@ -2147,10 +2121,10 @@ export class AppService {
    */
   public async findAllVacationCalendars(
     authToken: string,
-    employeeId: string,
-    year: number[],
-    limit: number,
-    page: number,
+    employeeId?: string,
+    year?: number[],
+    limit?: number,
+    page?: number,
   ): Promise<VacationCalendarResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -2238,7 +2212,7 @@ export class AppService {
   //vacation calendar totals
 
   /**
-   * recuperare i totalizzatori di un piano ferie
+   * recupera i totalizzatori di un piano ferie
    * @param authToken
    * @param employeeId id del dipendente a cui è associato piano ferie
    * @param year anno del piano ferie da cercare
@@ -2248,9 +2222,9 @@ export class AppService {
   public async findVacationCalendarTotals(
     authToken: string,
     employeeId: string,
-    year: number,
-    limit: number,
-    page: number,
+    year?: number,
+    limit?: number,
+    page?: number,
   ): Promise<VacationCalendarTotalsResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -2274,6 +2248,65 @@ export class AppService {
       });
     } catch (e) {
       throw e?.message || 'Impossibile trovare totali del piano ferie';
+    }
+  }
+
+  public async findAllVacationDayOff(
+    authToken: string,
+    employeeIds: string[],
+    from?: string,
+    to?: string,
+    page?: number,
+    limit?: number,
+    orderBy?: string,
+  ): Promise<VacationDayOffResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .get(`${BASE_URL}/schedule/v1/vacation-day-off`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            params: {
+              employeeIds,
+              from,
+              to,
+              page,
+              limit,
+              orderBy,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<VacationDayOffResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile trovare giorni di ferie';
+    }
+  }
+
+  public async createVacationDayOffRequest(
+    authToken: string,
+    body: VacationDayOffRequestsRequest,
+  ): Promise<VacationDayOffRequestsResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .post(`${BASE_URL}/schedule/v1/vacation-day-off-requests`, body, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<VacationDayOffRequestsResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile creare nuova richiesta di ferie';
     }
   }
 }
