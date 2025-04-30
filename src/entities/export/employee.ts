@@ -2,7 +2,7 @@ import { CompanyData } from '../company';
 import { CustomFields } from '../custom_fields';
 import { WorkStatus } from '../enum/work_status';
 import { Gender } from '../enum/gender';
-import { IdentityNumberType } from '../enum/Identity_number_type';
+import { IdentityNumberType } from '../enum/identity-number-type';
 import { Status } from '../enum/status';
 
 export interface Employee {

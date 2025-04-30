@@ -1,6 +1,6 @@
 import { Gender } from './enum/gender';
 import { Status } from './enum/status';
-import { IdentityNumberType } from './enum/Identity_number_type';
+import { IdentityNumberType } from './enum/identity-number-type';
 import { WorkStatus } from './enum/work_status';
 import { Meta } from './export/meta';
 

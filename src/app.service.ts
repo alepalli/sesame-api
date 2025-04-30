@@ -74,7 +74,21 @@ import { WorkedHoursByWeekDayQuery } from './entities/queries/worked_hours_by_we
 import { WorkedHoursByEmployeeQuery } from './entities/queries/worked_hours_by_employee.query';
 import { WorkedNightHoursQuery } from './entities/queries/worked_night_hours.query';
 import { WorkedAbsenceDaysQuery } from './entities/queries/worked_absence_days.query';
-import { VacationDayOffRequestsRequest, VacationDayOffRequestsResponse } from './entities/vacation_day_off_requests';
+import {
+  VacationDayOffRequestsRequest,
+  VacationDayOffRequestsResponse,
+} from './entities/vacation_day_off_requests';
+import {
+  TimeEntriesInRequest,
+  TimeEntriesOutRequest,
+  TimeEntriesRequest,
+  TimeEntriesResponse,
+} from './entities/time-entries';
+import {
+  ProjectsRequest,
+  ProjectsResponse,
+  UpdateProjectsRequest,
+} from './entities/projects';
 
 const BASE_URL = 'https://api-eu1.sesametime.com';
 
@@ -2251,6 +2265,17 @@ export class AppService {
     }
   }
 
+  /**
+   * recupera tutti i giorni di ferie
+   *
+   * @param authToken
+   * @param employeeIds
+   * @param from
+   * @param to
+   * @param page
+   * @param limit
+   * @param orderBy
+   */
   public async findAllVacationDayOff(
     authToken: string,
     employeeIds: string[],
@@ -2307,6 +2332,324 @@ export class AppService {
       });
     } catch (e) {
       throw e?.message() || 'Impossibile creare nuova richiesta di ferie';
+    }
+  }
+
+  // time entries
+
+  /**
+   * start a time entry
+   * @param authToken
+   * @param body TimeEntriesRequest
+   */
+
+  public async crateTimeEntryIn(
+    authToken: string,
+    body: TimeEntriesInRequest,
+  ): Promise<TimeEntriesResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .post(`${BASE_URL}/project/v1/time-entries/start`, body, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<TimeEntriesResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message();
+    }
+  }
+
+  /**
+   * close a time entry
+   *
+   * @param authToken
+   * @param body TimeEntriesOutRequest
+   */
+  public async createTimeEntryOut(
+    authToken: string,
+    body: TimeEntriesOutRequest,
+  ): Promise<TimeEntriesResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .post(`${BASE_URL}/project/v1/time-entries/stop`, body, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<TimeEntriesResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message();
+    }
+  }
+
+  public async createTimeEntry(
+    authToken: string,
+    body: TimeEntriesRequest,
+  ): Promise<TimeEntriesResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .post(`${BASE_URL}/project/v1/time-entries`, body, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<TimeEntriesResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message();
+    }
+  }
+
+  /**
+   * recupera tutte le time entries
+   *
+   * @param authToken
+   * @param employeeId
+   * @param from
+   * @param to
+   * @param employeeStatus
+   * @param limit
+   * @param page
+   */
+  public async findAllTimeEntries(
+    authToken: string,
+    employeeId?: string,
+    from?: string,
+    to?: string,
+    employeeStatus?: Status,
+    limit?: number,
+    page?: number,
+  ): Promise<TimeEntriesResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .get(`${BASE_URL}/project/v1/time-entries`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            params: {
+              employeeId,
+              from,
+              to,
+              employeeStatus,
+              limit,
+              page,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<TimeEntriesResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message();
+    }
+  }
+
+  /**
+   * aggiorna una time entry tramite id
+   *
+   * @param authToken TimeEntriesInRequest
+   * @param body
+   * @param id
+   */
+  public async updateTimeEntryById(
+    authToken: string,
+    body: TimeEntriesInRequest,
+    id: string,
+  ): Promise<TimeEntriesResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .put(`${BASE_URL}/project/v1/time-entries/${id}`, body, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<TimeEntriesResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message();
+    }
+  }
+
+  /**
+   * elimina una time entry tramite id
+   *
+   * @param authToken TimeEntriesInRequest
+   * @param id
+   */
+  public async deleteTimeEntryById(
+    authToken: string,
+    id: string,
+  ): Promise<TimeEntriesResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .put(`${BASE_URL}/project/v1/time-entries/${id}`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<TimeEntriesResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message();
+    }
+  }
+
+  // projects
+  /**
+   * creare un nuovo progetto
+   *
+   * @param authToken
+   * @param body ProjectsRequest
+   */
+
+  public async createProject(
+    authToken: string,
+    body: ProjectsRequest,
+  ): Promise<ProjectsResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .post(`${BASE_URL}/project/v1/projects`, body, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<ProjectsResponse>) => resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile creare nuovo progetto';
+    }
+  }
+
+  /**
+   * recupera tutti i progetti
+   *
+   * @param authToken
+   * @param id
+   * @param page
+   * @param limit
+   * @param orderBy
+   */
+  public async getAllProjects(
+    authToken: string,
+    id: string,
+    page?: number,
+    limit?: number,
+    orderBy?: string,
+  ): Promise<ProjectsResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .get(`${BASE_URL}/project/v1/projects`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            params: {
+              id,
+              page,
+              limit,
+              orderBy,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<ProjectsResponse>) => resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile trovare progetti';
+    }
+  }
+
+  /**
+   * aggiorna progetto tramite id
+   *
+   * @param authToken
+   * @param id
+   * @param body UpdateProjectsRequest
+   */
+  public async updateProjectById(
+    authToken: string,
+    id: string,
+    body: UpdateProjectsRequest,
+  ): Promise<ProjectsResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .put(`${BASE_URL}/project/v1/projects/${id}`, body, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<ProjectsResponse>) => resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile aggiornare progetto';
+    }
+  }
+
+  /**
+   * elimina un progetto tramite id
+   *
+   * @param authToken
+   * @param id
+   */
+  public async deleteProjectById(
+    authToken: string,
+    id: string,
+  ): Promise<ProjectsResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .put(`${BASE_URL}/project/v1/projects/${id}`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<ProjectsResponse>) => resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile eliminare progetto';
     }
   }
 }
