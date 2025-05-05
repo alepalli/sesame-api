@@ -4,17 +4,17 @@ import { CoreInfoResponse } from './entities/security';
 import { AxiosResponse } from 'axios';
 import { CompanyResponse, CompanyRequest } from './entities/company';
 import { EmployeesRequest, EmployeesResponse } from './entities/employees';
-import { JobChargesRequest, JobChargesResponse } from './entities/job_charges';
+import { JobChargesRequest, JobChargesResponse } from './entities/job-charges';
 import {
   EmployeeManagersResponse,
   EmployeeManagersRequest,
-} from './entities/employee_managers';
+} from './entities/employee-managers';
 import { RolesResponse } from './entities/roles';
 import {
   EmployeeAssignationsRolesDelete,
   EmployeeAssignationsRolesRequest,
   EmployeeAssignationsRolesResponse,
-} from './entities/employee_assignations_roles';
+} from './entities/employee-assignations-roles';
 import {
   DepartmentsRequest,
   DepartmentsRequestPut,
@@ -23,7 +23,7 @@ import {
 import {
   EmployeeDepartmentAssignationsRequest,
   EmployeeDepartmentAssignationsResponse,
-} from './entities/employee_departments_assignations';
+} from './entities/employee-departments-assignations';
 import {
   OfficesRequest,
   OfficesRequestPut,
@@ -32,52 +32,52 @@ import {
 import {
   EmployeeOfficeAssignationsRequest,
   EmployeeOfficeAssignationsResponse,
-} from './entities/employee_office_assignations';
+} from './entities/employee-office-assignations';
 import {
   CustomFieldsRequest,
   CustomFieldsRequestPut,
   CustomFieldsResponse,
-} from './entities/custom_fields';
+} from './entities/custom-fields';
 import {
   EmployeeProfilesRequest,
   EmployeeProfilesResponse,
-} from './entities/employee_profiles';
+} from './entities/employee-profiles';
 import {
   WorkEntriesRequest,
   WorkEntriesRequestClockIn,
   WorkEntriesRequestClockOut,
   WorkEntriesRequestCreate,
   WorkEntriesResponse,
-} from './entities/work_entries';
-import { CheckTypesResponse } from './entities/check_types';
-import { WorkBreaksResponse } from './entities/work_breaks';
-import { CheckValidationResponse } from './entities/check_validation';
+} from './entities/work-entries';
+import { CheckTypesResponse } from './entities/check-types';
+import { WorkBreaksResponse } from './entities/work-breaks';
+import { CheckValidationResponse } from './entities/check-validation';
 import { StatisticsResponse } from './entities/statistics';
 import {
   VacationConfigurationRequest,
   VacationConfigurationResponse,
-} from './entities/vacation_configurations';
+} from './entities/vacation-configurations';
 import {
   VacationCalendarRequest,
   VacationCalendarRequestPut,
   VacationCalendarResponse,
-} from './entities/vacation_calendars';
-import { VacationCalendarTotalsResponse } from './entities/vacation_calendar_totals';
+} from './entities/vacation-calendars';
+import { VacationCalendarTotalsResponse } from './entities/vacation-calendar-totals';
 import { Status } from './entities/enum/status';
 import { Permission } from './entities/enum/permission';
 import {
   VacationConfigurationsAssignationsRequest,
   VacationConfigurationsAssignationsResponse,
-} from './entities/vacation_configurations_assignations';
-import { VacationDayOffResponse } from './entities/vacation_day_off';
-import { WorkedHoursByWeekDayQuery } from './entities/queries/worked_hours_by_week_day.query';
-import { WorkedHoursByEmployeeQuery } from './entities/queries/worked_hours_by_employee.query';
-import { WorkedNightHoursQuery } from './entities/queries/worked_night_hours.query';
-import { WorkedAbsenceDaysQuery } from './entities/queries/worked_absence_days.query';
+} from './entities/vacation-configurations-assignations';
+import { VacationDayOffResponse } from './entities/vacation-day-off';
+import { WorkedHoursByWeekDayQuery } from './entities/queries/worked-hours-by-week-day.query';
+import { WorkedHoursByEmployeeQuery } from './entities/queries/worked-hours-by-employee.query';
+import { WorkedNightHoursQuery } from './entities/queries/worked-night-hours.query';
+import { WorkedAbsenceDaysQuery } from './entities/queries/worked-absence-days.query';
 import {
   VacationDayOffRequestsRequest,
   VacationDayOffRequestsResponse,
-} from './entities/vacation_day_off_requests';
+} from './entities/vacation-day-of-requests';
 import {
   TimeEntriesInRequest,
   TimeEntriesOutRequest,
@@ -89,6 +89,7 @@ import {
   ProjectsResponse,
   UpdateProjectsRequest,
 } from './entities/projects';
+import { CustomersRequest, CustomersResponse } from './entities/customers';
 
 const BASE_URL = 'https://api-eu1.sesametime.com';
 
@@ -168,7 +169,7 @@ export class AppService {
     try {
       return new Promise((resolve, reject): void => {
         this._http
-          .post(`${BASE_URL}/core/v3/employees/`, body, {
+          .post(`${BASE_URL}/core/v3/employees`, body, {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },
@@ -213,7 +214,7 @@ export class AppService {
     try {
       return new Promise((resolve, reject): void => {
         this._http
-          .get(`${BASE_URL}/core/v3/employees/`, {
+          .get(`${BASE_URL}/core/v3/employees`, {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },
@@ -339,7 +340,7 @@ export class AppService {
     try {
       return new Promise((resolve, reject): void => {
         this._http
-          .post(`${BASE_URL}/core/v3/job-charges/`, body, {
+          .post(`${BASE_URL}/core/v3/job-charges`, body, {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },
@@ -374,7 +375,7 @@ export class AppService {
     try {
       return new Promise((resolve, reject): void => {
         this._http
-          .get(`${BASE_URL}/core/v3/job-charges/`, {
+          .get(`${BASE_URL}/core/v3/job-charges`, {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },
@@ -2652,4 +2653,6 @@ export class AppService {
       throw e?.message() || 'Impossibile eliminare progetto';
     }
   }
+
+
 }

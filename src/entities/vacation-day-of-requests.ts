@@ -1,6 +1,6 @@
 import { Type } from './enum/type';
 import { Meta } from './export/meta';
-import { VacationCalendarsData } from './vacation_calendars';
+import { VacationCalendarsData } from './vacation-calendars';
 import { Employee } from './export/employee';
 import { Status } from './enum/status';
 

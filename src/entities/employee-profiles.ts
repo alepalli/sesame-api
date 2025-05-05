@@ -1,4 +1,4 @@
-import { WorkStatus } from './enum/work_status';
+import { WorkStatus } from './enum/work-status';
 import { Meta } from './export/meta';
 
 export interface EmployeeProfilesRequest {

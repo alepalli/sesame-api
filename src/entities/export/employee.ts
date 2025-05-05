@@ -1,6 +1,6 @@
 import { CompanyData } from '../company';
-import { CustomFields } from '../custom_fields';
-import { WorkStatus } from '../enum/work_status';
+import { CustomFields } from '../custom-fields';
+import { WorkStatus } from '../enum/work-status';
 import { Gender } from '../enum/gender';
 import { IdentityNumberType } from '../enum/identity-number-type';
 import { Status } from '../enum/status';

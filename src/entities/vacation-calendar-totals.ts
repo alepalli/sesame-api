@@ -1,5 +1,5 @@
 import { Employee } from './export/employee';
-import { VacationConfigurationData } from './vacation_configurations';
+import { VacationConfigurationData } from './vacation-configurations';
 import { Meta } from './export/meta';
 
 export interface VacationCalendarTotalsData {

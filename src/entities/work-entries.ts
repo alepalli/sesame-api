@@ -1,7 +1,7 @@
 import { Employee } from './export/employee';
 import { Coordinates } from './export/coordinates';
 import { Meta } from './export/meta';
-import { WorkEntryType } from './enum/work_entry_type';
+import { WorkEntryType } from './enum/work-entry-type';
 
 export interface WorkEntriesData {
   id: string;

@@ -1,4 +1,4 @@
-import { VacationConfigurationData } from '../vacation_configurations';
+import { VacationConfigurationData } from '../vacation-configurations';
 
 export interface Calendar {
   id: string;

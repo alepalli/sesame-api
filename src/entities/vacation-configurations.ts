@@ -1,10 +1,10 @@
 import { CompanyData } from './company';
 import { Meta } from './export/meta';
-import { RenewalPeriod } from './enum/renewal_period';
-import { DayType } from './enum/day_type';
-import { PickMode } from './enum/pick_mode';
-import { HalfDayVacationConfiguration } from './enum/half_day_vacation_configuration';
-import { ConfigurationType } from './enum/configuration_type';
+import { RenewalPeriod } from './enum/renewal-period';
+import { DayType } from './enum/day-type';
+import { PickMode } from './enum/pick-mode';
+import { HalfDayVacationConfiguration } from './enum/half-day-vacation-configuration';
+import { ConfigurationType } from './enum/configuration-type';
 
 export interface VacationConfigurationData {
   id: string;

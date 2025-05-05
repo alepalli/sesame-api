@@ -1,7 +1,7 @@
 import { Gender } from './enum/gender';
 import { Status } from './enum/status';
 import { IdentityNumberType } from './enum/identity-number-type';
-import { WorkStatus } from './enum/work_status';
+import { WorkStatus } from './enum/work-status';
 import { Meta } from './export/meta';
 
 export interface EmployeesRequest {

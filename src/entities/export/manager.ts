@@ -1,4 +1,4 @@
-import { WorkStatus } from '../enum/work_status';
+import { WorkStatus } from '../enum/work-status';
 import { Gender } from '../enum/gender';
 import { IdentityNumberType } from '../enum/identity-number-type';
 
