@@ -18,6 +18,6 @@ export interface VacationCalendarTotalsData {
 }
 
 export interface VacationCalendarTotalsResponse {
-  data: VacationCalendarTotalsData;
+  data: VacationCalendarTotalsData[];
   meta: Meta;
 }

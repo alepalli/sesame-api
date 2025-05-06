@@ -18,6 +18,11 @@ export interface OfficesResponse {
   meta: Meta;
 }
 
+export interface OfficesListResponse {
+  data: OfficesData[];
+  meta: Meta;
+}
+
 export interface OfficesRequest {
   companyId: string;
   name: string;

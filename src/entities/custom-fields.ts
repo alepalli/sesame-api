@@ -19,9 +19,13 @@ export interface CustomFieldsData {
   updatedAt: string;
 }
 
-
 export interface CustomFieldsResponse {
   data: CustomFieldsData;
+  meta: Meta;
+}
+
+export interface CustomFieldsListResponse {
+  data: CustomFieldsData[];
   meta: Meta;
 }
 

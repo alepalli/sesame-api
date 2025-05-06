@@ -15,6 +15,11 @@ export interface EmployeeOfficeAssignationsResponse {
   meta: Meta;
 }
 
+export interface EmployeeOfficeAssignationsListResponse {
+  data: EmployeeOfficeAssignationsData[];
+  meta: Meta;
+}
+
 export interface EmployeeOfficeAssignationsRequest {
   employeeId: string;
   officeId: string;

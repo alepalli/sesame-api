@@ -27,6 +27,11 @@ export interface WorkEntriesResponse {
   meta: Meta;
 }
 
+export interface WorkEntriesListResponse {
+  data: WorkEntriesData[];
+  meta: Meta;
+}
+
 export interface WorkEntriesRequest {
   workEntryType: string;
   workEntryIn: {

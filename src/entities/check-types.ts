@@ -6,7 +6,7 @@ export interface CheckTypesData{
   name: string;
 }
 
-export interface CheckTypesResponse {
-  data: CheckTypesData;
+export interface CheckTypesListResponse {
+  data: CheckTypesData[];
   meta: Meta;
 }

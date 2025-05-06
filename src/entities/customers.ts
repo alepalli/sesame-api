@@ -14,12 +14,25 @@ export interface CustomersData {
 }
 
 export interface CustomersResponse {
+  data: CustomersData;
+  meta: Meta;
+}
+
+export interface CustomersListResponse {
   data: CustomersData[];
   meta: Meta;
 }
 
-export interface CustomersRequest {
+export interface CustomersRequestPost {
   companyId: string;
+  customerName: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  description: string;
+}
+export interface CustomersRequest {
   customerName: string;
   firstName: string;
   lastName: string;

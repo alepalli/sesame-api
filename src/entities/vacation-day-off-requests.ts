@@ -27,6 +27,11 @@ export interface VacationDayOffRequestsResponse {
   meta: Meta;
 }
 
+export interface VacationDayOffRequestsListResponse {
+  data: VacationDayOffRequestsData[];
+  meta: Meta;
+}
+
 export interface VacationDayOffRequestsRequest {
   employeeId: string;
   calendarId: string;
@@ -36,5 +41,8 @@ export interface VacationDayOffRequestsRequest {
   }[];
   comment: string;
   onlyWithSchedule: boolean;
+}
 
+export interface VacationDayOffRequestsRequestPost {
+  managerId: string;
 }

@@ -30,6 +30,11 @@ export interface VacationConfigurationResponse {
   meta: Meta;
 }
 
+export interface VacationConfigurationListResponse {
+  data: VacationConfigurationData[];
+  meta: Meta;
+}
+
 export interface VacationConfigurationRequest {
   name: string;
   requestVacationFrom: string;

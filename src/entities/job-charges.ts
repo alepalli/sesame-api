@@ -14,3 +14,8 @@ export interface JobChargesResponse {
   data: JobChargesData;
   meta: Meta;
 }
+
+export interface JobChargesListResponse {
+  data: JobChargesData[];
+  meta: Meta;
+}

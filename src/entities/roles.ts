@@ -5,7 +5,7 @@ export interface RolesData {
   name: string;
 }
 
-export interface RolesResponse {
-  data: RolesData;
+export interface RolesListResponse {
+  data: RolesData[];
   meta: Meta;
 }

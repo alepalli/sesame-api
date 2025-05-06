@@ -22,6 +22,11 @@ export interface VacationCalendarResponse {
   meta: Meta;
 }
 
+export interface VacationCalendarListResponse {
+  data: VacationCalendarsData[];
+  meta: Meta;
+}
+
 export interface VacationCalendarRequest {
   employeeId: string;
   vacationConfigurationId: string;

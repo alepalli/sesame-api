@@ -15,6 +15,11 @@ export interface EmployeeDepartmentAssignationsResponse {
   meta: Meta;
 }
 
+export interface EmployeeDepartmentAssignationsListResponse {
+  data: EmployeeDepartmentAssignationsData[];
+  meta: Meta;
+}
+
 export interface EmployeeDepartmentAssignationsRequest {
   employeeId: string;
   departmentId: string;

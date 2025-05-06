@@ -3,37 +3,52 @@ import { HttpService } from '@nestjs/axios';
 import { CoreInfoResponse } from './entities/security';
 import { AxiosResponse } from 'axios';
 import { CompanyResponse, CompanyRequest } from './entities/company';
-import { EmployeesRequest, EmployeesResponse } from './entities/employees';
-import { JobChargesRequest, JobChargesResponse } from './entities/job-charges';
+import {
+  EmployeesListResponse,
+  EmployeesRequest,
+  EmployeesRequestPost,
+  EmployeesResponse,
+} from './entities/employees';
+import {
+  JobChargesListResponse,
+  JobChargesRequest,
+  JobChargesResponse,
+} from './entities/job-charges';
 import {
   EmployeeManagersResponse,
   EmployeeManagersRequest,
+  EmployeeManagersListResponse,
 } from './entities/employee-managers';
-import { RolesResponse } from './entities/roles';
+import { RolesListResponse } from './entities/roles';
 import {
   EmployeeAssignationsRolesDelete,
   EmployeeAssignationsRolesRequest,
   EmployeeAssignationsRolesResponse,
 } from './entities/employee-assignations-roles';
 import {
+  DepartmentsListResponse,
   DepartmentsRequest,
   DepartmentsRequestPut,
   DepartmentsResponse,
 } from './entities/departments';
 import {
+  EmployeeDepartmentAssignationsListResponse,
   EmployeeDepartmentAssignationsRequest,
   EmployeeDepartmentAssignationsResponse,
 } from './entities/employee-departments-assignations';
 import {
+  OfficesListResponse,
   OfficesRequest,
   OfficesRequestPut,
   OfficesResponse,
 } from './entities/offices';
 import {
+  EmployeeOfficeAssignationsListResponse,
   EmployeeOfficeAssignationsRequest,
   EmployeeOfficeAssignationsResponse,
 } from './entities/employee-office-assignations';
 import {
+  CustomFieldsListResponse,
   CustomFieldsRequest,
   CustomFieldsRequestPut,
   CustomFieldsResponse,
@@ -43,21 +58,24 @@ import {
   EmployeeProfilesResponse,
 } from './entities/employee-profiles';
 import {
+  WorkEntriesListResponse,
   WorkEntriesRequest,
   WorkEntriesRequestClockIn,
   WorkEntriesRequestClockOut,
   WorkEntriesRequestCreate,
   WorkEntriesResponse,
 } from './entities/work-entries';
-import { CheckTypesResponse } from './entities/check-types';
-import { WorkBreaksResponse } from './entities/work-breaks';
+import { CheckTypesListResponse } from './entities/check-types';
+import { WorkBreaksListResponse } from './entities/work-breaks';
 import { CheckValidationResponse } from './entities/check-validation';
 import { StatisticsResponse } from './entities/statistics';
 import {
+  VacationConfigurationListResponse,
   VacationConfigurationRequest,
   VacationConfigurationResponse,
 } from './entities/vacation-configurations';
 import {
+  VacationCalendarListResponse,
   VacationCalendarRequest,
   VacationCalendarRequestPut,
   VacationCalendarResponse,
@@ -69,27 +87,40 @@ import {
   VacationConfigurationsAssignationsRequest,
   VacationConfigurationsAssignationsResponse,
 } from './entities/vacation-configurations-assignations';
-import { VacationDayOffResponse } from './entities/vacation-day-off';
 import { WorkedHoursByWeekDayQuery } from './entities/queries/worked-hours-by-week-day.query';
 import { WorkedHoursByEmployeeQuery } from './entities/queries/worked-hours-by-employee.query';
 import { WorkedNightHoursQuery } from './entities/queries/worked-night-hours.query';
 import { WorkedAbsenceDaysQuery } from './entities/queries/worked-absence-days.query';
 import {
+  VacationDayOffRequestsListResponse,
   VacationDayOffRequestsRequest,
+  VacationDayOffRequestsRequestPost,
   VacationDayOffRequestsResponse,
-} from './entities/vacation-day-of-requests';
+} from './entities/vacation-day-off-requests';
 import {
-  TimeEntriesInRequest,
+  TimeEntriesInRequest, TimeEntriesListResponse,
   TimeEntriesOutRequest,
   TimeEntriesRequest,
   TimeEntriesResponse,
 } from './entities/time-entries';
 import {
+  ProjectsListResponse,
   ProjectsRequest,
   ProjectsResponse,
   UpdateProjectsRequest,
 } from './entities/projects';
-import { CustomersRequest, CustomersResponse } from './entities/customers';
+import { CustomersListResponse, CustomersRequest, CustomersResponse } from './entities/customers';
+import { VacationDayOffListResponse } from './entities/vacation-day-off';
+import {
+  DirectoryDocumentsListResponse,
+  DocumentsDataResponsePost,
+  DocumentsListResponse,
+  DocumentsRequest,
+} from './entities/documents';
+import {
+  AgreementsListResponse, AgreementsResponse,
+  AgreementsRequest, AgreementResponse,
+} from './entities/agreements';
 
 const BASE_URL = 'https://api-eu1.sesametime.com';
 
@@ -160,11 +191,11 @@ export class AppService {
    * Creazione un nuovo dipendente
    *
    * @param authToken Token di autorizzazione Bearer
-   * @param body Dati necessari per creare il dipendente
+   * @param body EmployeesRequestPost
    */
   public async createEmployee(
     authToken: string,
-    body: EmployeesRequest,
+    body: EmployeesRequestPost,
   ): Promise<EmployeesResponse> {
     try {
       return new Promise((resolve, reject): void => {
@@ -249,7 +280,7 @@ export class AppService {
   public async findEmployeeById(
     authToken: string,
     id: string,
-  ): Promise<EmployeesResponse> {
+  ): Promise<EmployeesListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -259,7 +290,7 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<EmployeesResponse>) =>
+            next: (data: AxiosResponse<EmployeesListResponse>) =>
               resolve(data.data),
             error: (error) => reject(error),
           });
@@ -273,15 +304,17 @@ export class AppService {
    * aggiorna dati di un dipendente
    * @param authToken
    * @param id del dipendente da aggiornare
+   * @param body EmployeesRequest
    */
   public async updateEmployeeById(
     authToken: string,
     id: string,
+    body: EmployeesRequest,
   ): Promise<EmployeesResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
-          .put(`${BASE_URL}/core/v3/employees/${id}`, {
+          .put(`${BASE_URL}/core/v3/employees/${id}`, body, {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },
@@ -371,7 +404,7 @@ export class AppService {
     limit?: number,
     page?: number,
     orderBy?: string,
-  ): Promise<JobChargesResponse> {
+  ): Promise<JobChargesListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -387,7 +420,7 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<JobChargesResponse>) =>
+            next: (data: AxiosResponse<JobChargesListResponse>) =>
               resolve(data.data),
             error: (error) => reject(error),
           });
@@ -583,7 +616,7 @@ export class AppService {
   }
 
   /**
-   * recupera manager in organigramma per dipendente
+   * recupera tutti i manager in organigramma per dipendente
    * @param authToken
    * @param employeeId
    * @param managerId
@@ -598,7 +631,7 @@ export class AppService {
     permission?: Permission,
     limit?: number,
     page?: number,
-  ): Promise<EmployeeManagersResponse> {
+  ): Promise<EmployeeManagersListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -615,7 +648,7 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<EmployeeManagersResponse>) =>
+            next: (data: AxiosResponse<EmployeeManagersListResponse>) =>
               resolve(data.data),
             error: (error) => reject(error),
           });
@@ -667,7 +700,7 @@ export class AppService {
     authToken: string,
     limit?: number,
     page?: number,
-  ): Promise<RolesResponse> {
+  ): Promise<RolesListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -681,7 +714,8 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<RolesResponse>) => resolve(data.data),
+            next: (data: AxiosResponse<RolesListResponse>) =>
+              resolve(data.data),
             error: (error) => reject(error),
           });
       });
@@ -834,7 +868,7 @@ export class AppService {
     limit?: number,
     page?: number,
     orderBy?: string,
-  ): Promise<DepartmentsResponse> {
+  ): Promise<DepartmentsListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -850,7 +884,7 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<DepartmentsResponse>) =>
+            next: (data: AxiosResponse<DepartmentsListResponse>) =>
               resolve(data.data),
             error: (error) => reject(error),
           });
@@ -934,7 +968,7 @@ export class AppService {
     departmentId?: string,
     limit?: number,
     page?: number,
-  ): Promise<EmployeeDepartmentAssignationsResponse> {
+  ): Promise<EmployeeDepartmentAssignationsListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -951,7 +985,7 @@ export class AppService {
           })
           .subscribe({
             next: (
-              data: AxiosResponse<EmployeeDepartmentAssignationsResponse>,
+              data: AxiosResponse<EmployeeDepartmentAssignationsListResponse>,
             ) => resolve(data.data),
             error: (error) => reject(error),
           });
@@ -1071,7 +1105,7 @@ export class AppService {
     limit?: number,
     page?: number,
     orderBy?: number,
-  ): Promise<OfficesResponse> {
+  ): Promise<OfficesListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -1087,7 +1121,8 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<OfficesResponse>) => resolve(data.data),
+            next: (data: AxiosResponse<OfficesListResponse>) =>
+              resolve(data.data),
             error: (error) => reject(error),
           });
       });
@@ -1171,7 +1206,7 @@ export class AppService {
     officeId?: string,
     limit?: number,
     page?: number,
-  ): Promise<EmployeeOfficeAssignationsResponse> {
+  ): Promise<EmployeeOfficeAssignationsListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -1187,8 +1222,9 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<EmployeeOfficeAssignationsResponse>) =>
-              resolve(data.data),
+            next: (
+              data: AxiosResponse<EmployeeOfficeAssignationsListResponse>,
+            ) => resolve(data.data),
             error: (error) => reject(error),
           });
       });
@@ -1308,7 +1344,7 @@ export class AppService {
     limit?: number,
     page?: number,
     orderBy?: number,
-  ): Promise<CustomFieldsResponse> {
+  ): Promise<CustomFieldsListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -1323,7 +1359,7 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<CustomFieldsResponse>) =>
+            next: (data: AxiosResponse<CustomFieldsListResponse>) =>
               resolve(data.data),
             error: (error) => reject(error),
           });
@@ -1506,7 +1542,7 @@ export class AppService {
     limit?: number,
     page?: number,
     orderBy?: string,
-  ): Promise<WorkEntriesResponse> {
+  ): Promise<WorkEntriesListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -1527,7 +1563,7 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<WorkEntriesResponse>) =>
+            next: (data: AxiosResponse<WorkEntriesListResponse>) =>
               resolve(data.data),
             error: (error) => reject(error),
           });
@@ -1613,7 +1649,7 @@ export class AppService {
     authToken: string,
     limit?: number,
     page?: number,
-  ): Promise<CheckTypesResponse> {
+  ): Promise<CheckTypesListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -1627,7 +1663,7 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<CheckTypesResponse>) =>
+            next: (data: AxiosResponse<CheckTypesListResponse>) =>
               resolve(data.data),
             error: (error) => reject(error),
           });
@@ -1650,7 +1686,7 @@ export class AppService {
     authToken: string,
     limit?: number,
     page?: number,
-  ): Promise<WorkBreaksResponse> {
+  ): Promise<WorkBreaksListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -1664,7 +1700,7 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<WorkBreaksResponse>) =>
+            next: (data: AxiosResponse<WorkBreaksListResponse>) =>
               resolve(data.data),
             error: (error) => reject(error),
           });
@@ -1918,7 +1954,7 @@ export class AppService {
     authToken: string,
     limit?: number,
     page?: number,
-  ): Promise<VacationConfigurationResponse> {
+  ): Promise<VacationConfigurationListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -1932,7 +1968,7 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<VacationConfigurationResponse>) =>
+            next: (data: AxiosResponse<VacationConfigurationListResponse>) =>
               resolve(data.data),
             error: (error) => reject(error),
           });
@@ -2140,7 +2176,7 @@ export class AppService {
     year?: number[],
     limit?: number,
     page?: number,
-  ): Promise<VacationCalendarResponse> {
+  ): Promise<VacationCalendarListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -2156,7 +2192,7 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<VacationCalendarResponse>) =>
+            next: (data: AxiosResponse<VacationCalendarListResponse>) =>
               resolve(data.data),
             error: (error) => reject(error),
           });
@@ -2266,6 +2302,8 @@ export class AppService {
     }
   }
 
+  // vacation day off
+
   /**
    * recupera tutti i giorni di ferie
    *
@@ -2285,7 +2323,7 @@ export class AppService {
     page?: number,
     limit?: number,
     orderBy?: string,
-  ): Promise<VacationDayOffResponse> {
+  ): Promise<VacationDayOffListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -2303,7 +2341,7 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<VacationDayOffResponse>) =>
+            next: (data: AxiosResponse<VacationDayOffListResponse>) =>
               resolve(data.data),
             error: (error) => reject(error),
           });
@@ -2313,6 +2351,14 @@ export class AppService {
     }
   }
 
+  // vacation day off requests
+
+  /**
+   * crea una nuova richiesta di ferie
+   *
+   * @param authToken
+   * @param body VacationDayOffRequestsRequest
+   */
   public async createVacationDayOffRequest(
     authToken: string,
     body: VacationDayOffRequestsRequest,
@@ -2336,6 +2382,161 @@ export class AppService {
     }
   }
 
+  /**
+   * recupera tutte le richieste di ferie
+   *
+   * @param authToken
+   * @param employeeId
+   * @param absencesValidator
+   * @param fromDayOff
+   * @param toDayOff
+   * @param status
+   * @param page
+   * @param limit
+   * @param orderBy
+   */
+  public async findAllVacationDayOffRequest(
+    authToken: string,
+    employeeId?: string,
+    absencesValidator?: string,
+    fromDayOff?: string,
+    toDayOff?: string,
+    status?: string,
+    page?: number,
+    limit?: number,
+    orderBy?: string,
+  ): Promise<VacationDayOffRequestsListResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .get(`${BASE_URL}/schedule/v1/vacation-day-off-requests`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            params: {
+              employeeId,
+              absencesValidator,
+              fromDayOff,
+              toDayOff,
+              status,
+              page,
+              limit,
+              orderBy,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<VacationDayOffRequestsListResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile trovare richieste di ferie';
+    }
+  }
+
+  /**
+   * accetta una richiesta di ferie tramite id
+   * @param authToken
+   * @param body VacationDayOffRequestsListRequestPost
+   * @param id id della richiesta da accettare
+   */
+  public async AcceptVacationDayOffRequest(
+    authToken: string,
+    body: VacationDayOffRequestsRequestPost,
+    id: string,
+  ): Promise<VacationDayOffRequestsResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .post(
+            `${BASE_URL}/schedule/v1/vacation-day-off-requests/${id}/accept`,
+            body,
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            },
+          )
+          .subscribe({
+            next: (data: AxiosResponse<VacationDayOffRequestsResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile accettare richiesta di ferie';
+    }
+  }
+
+  /**
+   * rifiuta una richiesta di ferie tramite id
+   * @param authToken
+   * @param body VacationDayOffRequestsListRequestPost
+   * @param id id della richiesta da rifiutare
+   */
+  public async RejectVacationDayOffRequest(
+    authToken: string,
+    body: VacationDayOffRequestsRequestPost,
+    id: string,
+  ): Promise<VacationDayOffRequestsResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .post(
+            `${BASE_URL}/schedule/v1/vacation-day-off-requests/${id}/accept`,
+            body,
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            },
+          )
+          .subscribe({
+            next: (data: AxiosResponse<VacationDayOffRequestsResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile rifiutare richiesta di ferie';
+    }
+  }
+
+  /**
+   * elimina una richiesta di ferie tramite id
+   * @param authToken
+   * @param body VacationDayOffRequestsListRequestPost
+   * @param id id della richiesta da rifiutare
+   */
+  public async DeleteVacationDayOffRequest(
+    authToken: string,
+    body: VacationDayOffRequestsRequestPost,
+    id: string,
+  ): Promise<VacationDayOffRequestsResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .post(
+            `${BASE_URL}/schedule/v1/vacation-day-off-requests/${id}`,
+            body,
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            },
+          )
+          .subscribe({
+            next: (data: AxiosResponse<VacationDayOffRequestsResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile rifiutare richiesta di ferie';
+    }
+  }
+
   // time entries
 
   /**
@@ -2344,7 +2545,7 @@ export class AppService {
    * @param body TimeEntriesRequest
    */
 
-  public async crateTimeEntryIn(
+  public async createTimeEntryIn(
     authToken: string,
     body: TimeEntriesInRequest,
   ): Promise<TimeEntriesResponse> {
@@ -2438,7 +2639,7 @@ export class AppService {
     employeeStatus?: Status,
     limit?: number,
     page?: number,
-  ): Promise<TimeEntriesResponse> {
+  ): Promise<TimeEntriesListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -2456,7 +2657,7 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<TimeEntriesResponse>) =>
+            next: (data: AxiosResponse<TimeEntriesListResponse>) =>
               resolve(data.data),
             error: (error) => reject(error),
           });
@@ -2565,13 +2766,13 @@ export class AppService {
    * @param limit
    * @param orderBy
    */
-  public async getAllProjects(
+  public async findAllProjects(
     authToken: string,
     id: string,
     page?: number,
     limit?: number,
     orderBy?: string,
-  ): Promise<ProjectsResponse> {
+  ): Promise<ProjectsListResponse> {
     try {
       return new Promise((resolve, reject): void => {
         this._http
@@ -2587,7 +2788,7 @@ export class AppService {
             },
           })
           .subscribe({
-            next: (data: AxiosResponse<ProjectsResponse>) => resolve(data.data),
+            next: (data: AxiosResponse<ProjectsListResponse>) => resolve(data.data),
             error: (error) => reject(error),
           });
       });
@@ -2630,7 +2831,7 @@ export class AppService {
    * elimina un progetto tramite id
    *
    * @param authToken
-   * @param id
+   * @param id id del progetto da eliminare
    */
   public async deleteProjectById(
     authToken: string,
@@ -2638,8 +2839,8 @@ export class AppService {
   ): Promise<ProjectsResponse> {
     try {
       return new Promise((resolve, reject): void => {
-        this._http
-          .put(`${BASE_URL}/project/v1/projects/${id}`, {
+        this._http  
+          .delete(`${BASE_URL}/project/v1/projects/${id}`, {
             headers: {
               Authorization: `Bearer ${authToken}`,
             },
@@ -2654,5 +2855,461 @@ export class AppService {
     }
   }
 
+  // customers
 
+  /**
+   * creazione di un nuovo cliente
+   * @param authToken
+   * @param body CustomersRequest
+   */
+  public async createCustomer(
+    authToken: string,
+    body: CustomersRequest,
+  ): Promise<CustomersResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .post(`${BASE_URL}/project/v1/customers`, body, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<CustomersResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile creare nuovo cliente';
+    }
+  }
+
+  /**
+   * recupera tutti i clienti
+   *
+   * @param authToken
+   * @param limit
+   * @param page
+   * @param orderBy
+   */
+  public async findAllCustomers(
+    authToken: string,
+    limit?: number,
+    page?: number,
+    orderBy?: string,
+  ): Promise<CustomersListResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .get(`${BASE_URL}/project/v1/customers`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            params: {
+              limit,
+              page,
+              orderBy,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<CustomersListResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile trovare clienti';
+    }
+  }
+
+  /**
+   * aggiorna cliente tramite id
+   * @param authToken
+   * @param id id del cliente da aggiornare
+   * @param body CustomersRequestUpdate
+   */
+  public async updateCustomerById(
+    authToken: string,
+    id: string,
+    body: CustomersRequest,
+  ): Promise<CustomersResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .put(`${BASE_URL}/project/v1/customers/${id}`, body, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<CustomersResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile aggiornare dati cliente';
+    }
+  }
+
+  /**
+   *
+   * @param authToken
+   * @param id
+   * @param body
+   */
+  public async deleteCustomerById(
+    authToken: string,
+    id: string,
+    body: CustomersRequest,
+  ): Promise<CustomersResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .request({
+            method: 'DELETE',
+            url: `${BASE_URL}/project/v1/customers/${id}`,
+            data: body,
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<CustomersResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message || 'Impossibile eliminare cliente';
+    }
+  }
+
+  // documents
+
+  /**
+   * recupera l'elenco delle directory aziendali disponibili.
+   *
+   * @param authToken
+   * @param employeeId
+   * @param parentDirectoryType
+   * @param limit
+   * @param page
+   */
+
+  public async findAllCompanyDirectories(
+    authToken: string,
+    employeeId?: string,
+    parentDirectoryType?: string,
+    limit?: number,
+    page?: number,
+  ): Promise<DocumentsListResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .get(`${BASE_URL}/project/v1/directories`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            params: {
+              employeeId,
+              parentDirectoryType,
+              limit,
+              page,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<DocumentsListResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile trovare directories';
+    }
+  }
+
+  /**
+   * recupera i documenti contenuti in una specifica directory, tramite suo id
+   *
+   * @param authToken
+   * @param directoryId
+   * @param limit
+   * @param page
+   */
+
+  public async findAllDirectoryDocuments(
+    authToken: string,
+    directoryId: string,
+    limit?: number,
+    page?: number,
+  ): Promise<DirectoryDocumentsListResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .get(`${BASE_URL}/project/v1/directories/${directoryId}/documents}`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            params: {
+              limit,
+              page,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<DirectoryDocumentsListResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile trovare directories';
+    }
+  }
+
+  /**
+   * caricare un documento
+   *
+   * @param authToken
+   * @param directoryId
+   * @param body DocumentsRequest
+   */
+  public async uploadDocument(
+    authToken: string,
+    directoryId: string,
+    body: DocumentsRequest,
+  ): Promise<DocumentsDataResponsePost> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .post(
+            `${BASE_URL}/project/v1/directories/${directoryId}/documents}`,
+            body,
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            },
+          )
+          .subscribe({
+            next: (data: AxiosResponse<DocumentsDataResponsePost>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile caricare documento';
+    }
+  }
+
+  /**
+   * download di file binari di un documento
+   * @param authToken
+   * @param documentId
+   */
+  public async downloadBinaryFileOfDocument(
+    authToken: string,
+    documentId: string,
+  ): Promise<Blob> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .get(`${BASE_URL}/project/v1/directories/${documentId}/download`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            responseType: 'blob',
+          })
+          .subscribe({
+            next: (response: AxiosResponse<Blob>) =>
+              resolve(response.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile scaricare file';
+    }
+  }
+
+  /**
+   * eliminare un documento
+   *
+   * @param authToken
+   * @param documentId id del documento da eliminar
+   */
+
+  public async deleteDocument(
+    authToken: string,
+    documentId: string,
+  ): Promise<void> {
+    return new Promise((resolve, reject): void => {
+      this._http
+        .delete(`${BASE_URL}/project/v1/directories/${documentId}`, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        })
+        .subscribe({
+          next: () => resolve(),
+          error: (error) => reject(error),
+        });
+    });
+  }
+
+  // agreements
+
+  /**
+   * recupera tutti gli accordi
+   *
+   * @param authToken
+   * @param limit
+   * @param page
+   */
+  public async findAllAgreements(
+    authToken: string,
+    limit?: number,
+    page?: number,
+  ): Promise<AgreementsListResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .get(`${BASE_URL}/project/v1/agreements}`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            params: {
+              limit,
+              page,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<AgreementsListResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile trovare accordi';
+    }
+  }
+
+  public async createAgreement(
+    authToken: string,
+    body: AgreementsRequest,
+  ): Promise<AgreementsResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .post(`${BASE_URL}/project/v1/agreements}`, body, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<AgreementsResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile creare nuovo accordo';
+    }
+  }
+
+  /**
+   * recupera un accordo tramite id
+   * @param authToken
+   * @param agreementId id dell'accordo da recuperare
+   * @param limit
+   * @param page
+   */
+  public async findAgreementById(
+    authToken: string,
+    agreementId: string,
+    limit?: number,
+    page?: number,
+  ): Promise<AgreementsResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .get(`${BASE_URL}/project/v1/agreements/${agreementId}`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+            params: {
+              limit,
+              page,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<AgreementsResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile trovare accordo';
+    }
+  }
+
+  /**
+   * modifica un accordo tramite suo id
+   *
+   *
+   * @param authToken
+   * @param agreementId id dell'accordo da aggiornare
+   */
+  public async updateAgreement(
+    authToken: string,
+    agreementId: string,
+  ): Promise<AgreementResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .put(`${BASE_URL}/project/v1/agreements/${agreementId}`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<AgreementResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile modificare accordo';
+    }
+  }
+
+  /**
+   * elimina un accordo tramite suo id
+   *
+   * @param authToken
+   * @param agreementId id dell'accordo da eliminare
+   */
+
+  public async deleteAgreement(
+    authToken: string,
+    agreementId: string,
+  ): Promise<AgreementResponse> {
+    try {
+      return new Promise((resolve, reject): void => {
+        this._http
+          .put(`${BASE_URL}/project/v1/agreements/${agreementId}`, {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          })
+          .subscribe({
+            next: (data: AxiosResponse<AgreementResponse>) =>
+              resolve(data.data),
+            error: (error) => reject(error),
+          });
+      });
+    } catch (e) {
+      throw e?.message() || 'Impossibile eliminare accordo';
+    }
+  }
 }

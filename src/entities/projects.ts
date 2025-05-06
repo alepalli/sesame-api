@@ -18,6 +18,11 @@ export interface ProjectsData {
 }
 
 export interface ProjectsResponse {
+  data: ProjectsData;
+  meta: Meta;
+}
+
+export interface ProjectsListResponse {
   data: ProjectsData[];
   meta: Meta;
 }

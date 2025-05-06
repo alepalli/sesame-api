@@ -4,7 +4,7 @@ import { IdentityNumberType } from './enum/identity-number-type';
 import { WorkStatus } from './enum/work-status';
 import { Meta } from './export/meta';
 
-export interface EmployeesRequest {
+export interface EmployeesRequestPost {
   companyId: string;
   firstName: string;
   lastName: string;
@@ -101,6 +101,50 @@ export interface EmployeesData {
   jobChargeId: string;
   jobChargeName: string;
   language: string;
+}
+
+export interface EmployeesRequest {
+  firstName: string;
+  lastName: string;
+  invitation: boolean;
+  status: Status;
+  gender: Gender;
+  email: string;
+  contractId: string;
+  code: number;
+  pin: number;
+  nid: string;
+  identityNumberType: IdentityNumberType;
+  ssn: string;
+  phone: string;
+  dateOfBirth: string;
+  customFields: {
+    id: string;
+    value: string;
+  }[];
+  nationality: string;
+  maritalStatus: string;
+  address: string;
+  postalCode: string;
+  emergencyPhone: string;
+  childrenCount: number;
+  disability: number;
+  personalEmail: string;
+  description: string;
+  city: string;
+  province: string;
+  country: string;
+  salaryRange: string;
+  studyLevel: string;
+  professionalCategoryCode: string;
+  professionalCategoryDescription: string;
+  bic: string;
+  jobChargeId: string;
+}
+
+export interface EmployeesListResponse {
+  data: EmployeesData[];
+  meta: Meta;
 }
 
 export interface EmployeesResponse {

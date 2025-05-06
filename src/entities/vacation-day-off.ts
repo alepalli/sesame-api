@@ -10,7 +10,7 @@ export interface VacationDayOffData {
   employee: Employee;
 }
 
-export interface VacationDayOffResponse {
-  data: VacationDayOffData;
+export interface VacationDayOffListResponse {
+  data: VacationDayOffData[];
   meta: Meta;
 }

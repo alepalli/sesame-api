@@ -22,6 +22,11 @@ export interface TimeEntriesData {
 }
 
 export interface TimeEntriesResponse {
+  data: TimeEntriesData;
+  meta: Meta;
+}
+
+export interface TimeEntriesListResponse {
   data: TimeEntriesData[];
   meta: Meta;
 }

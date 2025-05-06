@@ -9,7 +9,7 @@ export interface WorkBreaksData {
   breakMinutes: number;
 }
 
-export interface WorkBreaksResponse {
-  data: WorkBreaksData;
+export interface WorkBreaksListResponse {
+  data: WorkBreaksData[];
   meta: Meta;
 }

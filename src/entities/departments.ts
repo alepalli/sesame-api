@@ -18,3 +18,8 @@ export interface DepartmentsResponse {
 export interface DepartmentsRequestPut {
   name: string;
 }
+
+export interface DepartmentsListResponse {
+  data: DepartmentsData[];
+  meta: Meta;
+}

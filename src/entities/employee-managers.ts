@@ -25,3 +25,8 @@ export interface EmployeeManagersResponse {
   data: EmployeeManagersData;
   meta: Meta;
 }
+
+export interface EmployeeManagersListResponse {
+  data: EmployeeManagersData[];
+  meta: Meta;
+}
